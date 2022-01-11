@@ -58,23 +58,39 @@ function ajouterPanier(produit){
         let optionsProduit = {
             nameProduit : produit.name,
             idProduit : id,
+            imgProduit : produit.imageUrl,
             quantityProduit : nbCanape.value,
-            colorProduit : couleurChoix.value
+            colorProduit : couleurChoix.value,
+            price : produit.price,
+            totalPrice : 0
         };
         let produitLocalStorage = JSON.parse(localStorage.getItem('produit'));
 
         if (produitLocalStorage){
-            produitLocalStorage.push(optionsProduit);
+            let produitExist =  produitLocalStorage.find(x => x.idProduit == optionsProduit.idProduit &&  x.colorProduit == optionsProduit.colorProduit);
+            if(produitExist != null){
+                // on incremente la quantité
+                let indexTab = produitLocalStorage.indexOf(produitExist);
+                produitLocalStorage[indexTab].quantityProduit = parseInt(produitExist.quantityProduit) + parseInt(optionsProduit.quantityProduit);   
+                produitLocalStorage[indexTab].totalPrice = parseInt(produitExist.totalPrice)  + (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ));  
+
+            }else{
+                optionsProduit.totalPrice = (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ))
+                produitLocalStorage.push(optionsProduit);
+
+            }            
             localStorage.setItem('produit', JSON.stringify(produitLocalStorage));
-            console.log(produitLocalStorage);
+
+            
         }
         else{
             produitLocalStorage = [];
+            optionsProduit.totalPrice = (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ))
             produitLocalStorage.push(optionsProduit);
             localStorage.setItem('produit', JSON.stringify(produitLocalStorage));
-            console.log(produitLocalStorage);
         }
-        }
-        
+        }//créer constante pour trouver la valeur dans le local et additionner???
+        // value quantite + quantite ajout
+        // produitlocalstorage.find >>> quantityproduit + findproduit?????
     })
 }
