@@ -2,8 +2,6 @@ let produitLocalStorage = JSON.parse(localStorage.getItem('produit'));
 
 const positionPanierVide = document.querySelector('#cartAndFormContainer');
 const positionPanierPlein = document.querySelector('#cart__items');
-const positionTotal = document.querySelector('#totalPrice');
-const PositionQuantite = document.querySelector('#totalQuantity');
 if(produitLocalStorage === null || produitLocalStorage == 0){
 const cartVide = `
 <div id="cartAndFormContainer">
@@ -43,36 +41,33 @@ positionPanierVide.innerHTML = cartVide;
     positionPanierPlein.innerHTML = cartPlein;
 }
 
-//CALCUL PRIX TOTAL
+//CALCUL QUANTITE TOTALE
 
+let quantiteElement = document.getElementsByClassName('itemQuantity');
+quantiteTotal = 0;
+
+for( let q = 0; q < quantiteElement.length; ++q){
+  quantiteTotal += quantiteElement[q].valueAsNumber;
+}
+
+let panierQuantite = document.getElementById('totalQuantity');
+panierQuantite.innerHTML = quantiteTotal;
+console.log(quantiteTotal);
+
+//CALCUL PRIX TOTAL
 let prixAddition = [];
 
 for (let p = 0; p < produitLocalStorage.length; p++){
-  let prixPanier = produitLocalStorage[p].price;
-
+  let prixPanier = produitLocalStorage[p].totalPrice;
   prixAddition.push(prixPanier);
-
 }
 
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
 const prixTotal = prixAddition.reduce(reducer, 0);
 
-const prixAffichage = `<span id="totalPrice">${prixTotal}</span>`
-positionTotal.innerHTML = prixAffichage;
-
-let quantiteAddition = [];
-
-for (let q = 0; q < produitLocalStorage.length; q++){
-  let quantitePanier = produitLocalStorage[q].quantityProduit;
-
-  quantiteAddition.push(quantitePanier);
-}
-
-const quantiteTotal = quantiteAddition.reduce(reducer, 0);
-
-const quantiteAffichage = `<span id="totalQuantity">${quantiteTotal}</span>`
-
-PositionQuantite.innerHTML = quantiteAffichage;
+let panierPrix = document.getElementById('totalPrice');
+panierPrix.innerHTML = prixTotal;
+console.log(prixTotal);
 
 //SUPPRESSION
 let supprimer = document.querySelectorAll('.deleteItem');
