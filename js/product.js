@@ -17,7 +17,7 @@ function getProduit() {
         }
     })
     .catch((error) =>{
-        console.log(error);
+        alert("Erreur avec le serveur : " + error.message);
     })
 }
 
@@ -28,13 +28,13 @@ function getPost(produit){
     productImg.src = produit.imageUrl;
 
     let productName = document.getElementById('title');
-    productName.innerHTML = `<h1 id="title">${produit.name}</h1>`;
+    productName.innerHTML = `${produit.name}`;
 
     let productPrice = document.getElementById('price');
-    productPrice.innerHTML = `<span id="price">${produit.price}</span>`;
+    productPrice.innerHTML = `${produit.price}`;
 
     let productDescription = document.getElementById('description');
-    productDescription.innerHTML = `<p id="description">${produit.description}</p>`;
+    productDescription.innerHTML = `${produit.description}`;
 
     let productColors = document.getElementById('colors');
     produit.colors.forEach(color => {
@@ -44,6 +44,14 @@ function getPost(produit){
         productColors.appendChild(opt);
     });
     ajouterPanier(produit);
+}
+
+const Confirmation = () => {
+    if (window.confirm(`L'article a été ajouté au panier. Cliquez sur OK pour être redirigé vers le panier.`)){
+        window.location.href = "cart.html";
+    }else{
+        window.location.href = "index.html";
+    }
 }
 
 function ajouterPanier(produit){
@@ -73,10 +81,12 @@ function ajouterPanier(produit){
                 let indexTab = produitLocalStorage.indexOf(produitExist);
                 produitLocalStorage[indexTab].quantityProduit = parseInt(produitExist.quantityProduit) + parseInt(optionsProduit.quantityProduit);   
                 produitLocalStorage[indexTab].totalPrice = parseInt(produitExist.totalPrice)  + (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ));  
+                Confirmation();
 
             }else{
                 optionsProduit.totalPrice = (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ))
                 produitLocalStorage.push(optionsProduit);
+                Confirmation();
 
             }            
             localStorage.setItem('produit', JSON.stringify(produitLocalStorage));
@@ -88,9 +98,8 @@ function ajouterPanier(produit){
             optionsProduit.totalPrice = (parseInt(optionsProduit.price ) * parseInt(optionsProduit.quantityProduit ))
             produitLocalStorage.push(optionsProduit);
             localStorage.setItem('produit', JSON.stringify(produitLocalStorage));
+            Confirmation();
         }
-        }//créer constante pour trouver la valeur dans le local et additionner???
-        // value quantite + quantite ajout
-        // produitlocalstorage.find >>> quantityproduit + findproduit?????
+        }
     })
 }

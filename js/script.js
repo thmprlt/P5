@@ -1,7 +1,6 @@
 //Récupération de la réponse émise par l'API
 fetch("http://localhost:3000/api/products")
 .then(function(response){
-    console.log('je passe là')
     return response.json()
 })
 .then(function(data){
@@ -9,6 +8,7 @@ fetch("http://localhost:3000/api/products")
        display(data[i]);
    }
 }).catch((error) =>{
+
     console.log(error);
 })
 
@@ -24,4 +24,8 @@ function display(product){
     </article>
   </a>`
 }
+function errorServeur(lenomElement){
+  let element = document.getElementById(lenomElement);
+  element.innerHTML += `<p>Problème avec le serveur, veuillez contacter l'administrateur</p>`
 
+}
