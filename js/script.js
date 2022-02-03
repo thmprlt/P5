@@ -24,8 +24,3 @@ function display(product){
     </article>
   </a>`
 }
-function errorServeur(lenomElement){
-  let element = document.getElementById(lenomElement);
-  element.innerHTML += `<p>Problème avec le serveur, veuillez contacter l'administrateur</p>`
-
-}

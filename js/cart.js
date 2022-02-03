@@ -165,8 +165,10 @@ function getCommand(){
 
     if (basicRegExp.test(inputFirstName.value)){
       FirstNameErrorMsg.innerHTML = '';
+      return true;
     }else{
       FirstNameErrorMsg.innerHTML = 'Veuillez entrer votre prénom';
+      return false;
     }
   };
 
@@ -176,8 +178,10 @@ function getCommand(){
 
     if (basicRegExp.test(inputLastName.value)){
       LastNameErrorMsg.innerHTML = '';
+      return true;
     }else{
       LastNameErrorMsg.innerHTML = 'Veuillez entrer votre nom';
+      return false;
     }
   };
 
@@ -187,8 +191,10 @@ function getCommand(){
 
     if (addressRegExp.test(inputAddress.value)){
       addressErrorMsg.innerHTML = '';
+      return true;
     }else{
       addressErrorMsg.innerHTML = 'Veuillez entrer votre adresse';
+      return false;
     }
   };
 
@@ -198,8 +204,10 @@ function getCommand(){
 
     if (basicRegExp.test(inputCity.value)){
       CityErrorMsg.innerHTML = '';
+      return true;
     }else{
       CityErrorMsg.innerHTML = 'Veuillez entrer votre ville';
+      return false;
     }
   };
 
@@ -209,16 +217,16 @@ function getCommand(){
 
     if (emailRegExp.test(inputEmail.value)){
       emailErrorMsg.innerHTML = '';
+      return true;
     }else{
       emailErrorMsg.innerHTML = 'Veuillez entrer votre adresse mail';
+      return false;
     }
   };
 }
 getCommand();
 
 function sendCommand(){
-getCommand();
-
 
   const btnCommander = document.querySelector('#order');
 
